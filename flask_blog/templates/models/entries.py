@@ -21,3 +21,4 @@ def new_entry():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     return render_template('entries/new.html')
+    
