@@ -15,3 +15,9 @@ class Entry(db.Model):
 
     def __repr__(self):
         return '<Entry id:{} title:{} text:{}>'.format(self.id, self.title, self.text)
+
+@app.route('/entries/new',methods=['GET'])
+def new_entry():
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    return render_template('entries/new.html')
