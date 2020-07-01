@@ -1,4 +1,12 @@
-{% extends "layout.html" %}
-{% block body %}
+{% extends"layout.html" %}
+{% blockbody %}
+<ul class="list-group list-group-flush">
+{% for entry in entries %}
+<div class="card">
+<div class="cardbody">
+<h5 class="cardtitle">{{entry.title}}</h5></div></div>
+{% else %}
 投稿がありません
+{% endfor %}
+</ul>
 {% endblock %}
