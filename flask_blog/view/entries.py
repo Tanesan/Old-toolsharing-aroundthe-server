@@ -6,3 +6,17 @@ def show_entries():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     return render_template('entries/index.html')
+
+    @app.route('/entries',methods=['POST'])
+    def add_entry():
+        if not session.get('logged_in'):
+            return redirect(url_for('login'))
+        entry=Entry(
+            title=request.form['title'],
+            text=request.form['text']
+        )
+        db.session.add(entry)
+        db.session.commit()
+        flash('新しく記事が作成されました')
+        return redirect(url_for('show_entries'))
+        
