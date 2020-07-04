@@ -6,7 +6,98 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <link href="https://fonts.googleapis.com/earlyaccess/mplus1p.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+
+
+
 <link rel=stylesheet href="{{ url_for('static', filename='style.css') }}">
+<script src="{{ url_for('static', filename='current.js') }}"></script>
+
+  <nav id="headeramine" class="navbar navbar-expand-md navbar-dark menucolor fixed-left">
+    <a class="navbar-brand mt-4 mb-3" href="{{ url_for('entry.show_entries') }}">
+    <image src="/static/webtoolsharing.png" class="logo" alt="logo" width="auto" height="40px"></image>
+    <image src="/static/toolsharing.png" class="logo" alt="logo" width="85%"></image>
+    </a>
+    <div class="col-md-0 col-sm-6 col-1 "></div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <button class="taged" id="ops" onclick="opens();">
+<svg class="bi bi-arrow-bar-left" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M5.854 4.646a.5.5 0 0 0-.708 0l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L3.207 8l2.647-2.646a.5.5 0 0 0 0-.708z"/>
+  <path fill-rule="evenodd" d="M10 8a.5.5 0 0 0-.5-.5H3a.5.5 0 0 0 0 1h6.5A.5.5 0 0 0 10 8zm2.5 6a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 1 0v11a.5.5 0 0 1-.5.5z"/>
+</svg>
+</button>
+ 
+ {% if session.logged_in %}
+
+    <div class="row mb-2 rows hidxs">
+    <!--
+      <div class="whi row">
+        <div class="col-2"><a class="cad" href="https://toolsharing.jp/my-profile/"></div>
+        </a>
+        <div class="ml-4 col-3 asasa">pt</p>
+        </div>
+        <div class="col-2"><a class="btn btn-danger mt-1 pl-" href="{{ url_for('view.logout') }}" role="button">Logout</a></div>
+      </div>
+      -->
+      <form class="form-inline fscs" method="get" id="searchform" action="">
+       <!-- <div class="form-group">
+       
+        <input class="form-control headlist" type="search" placeholder="キーワード検索"  style="width:200px;" value="" name="s" class="s" title="" />
+-->
+<div id="searches-top"></div>
+   <!--
+        </div>-->
+      </form>
+    </div>
+ {% else %}
+      <div class="row mb-2 rows hidxs"><a class="btn btn-primary prl-3" href="{{ url_for('view.login') }}" role="button">Login</a><a class="btn btn-success prl-3" href="https://toolsharing.jp/registration-2/" role="button">Sign up</a></div>
+      <form class="form-inline fscs" method="get" id="searchform">
+        <div class="form-group">
+        
+        <input class="form-control" type="search" placeholder="キーワード検索"  style="width:200px;" value="" />
+       
+        
+        </div>
+      </form>
+ {% endif %}
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav nav-pills nav-stacked mr-auto mt-4">
+        <div class="mmclor">For Users</div>
+        <div class="listtag">
+          <li class="nav-item"><a class="nav-link whi"  href="https://toolsharing.jp">Home</a></li>
+          <li class="nav-item"><a class="nav-link whi" href="https://toolsharing.jp/search/">Search</a></li>
+          <li class="nav-item"><a class="nav-link whi"  href="https://toolsharing.jp/popular/">Popular</a></li>
+          <li class="nav-item"><a class="nav-link whi" href="https://toolsharing.jp/category/">Category</a></li>
+          <li class="nav-item"><a class="nav-link whi" href="https://toolsharing.jp/request/">Request</a></li>
+        </div>
+      </ul>
+      <ul class="nav nav-pills nav-stacked mr-auto mt-3">
+        <div class="mmclors">For Programmers</div>
+        {% if session.logged_in %}
+          <div class="d-md-none">
+            <li class="nav-item"><a class="nav-link whi" href="https://toolsharing.jp/my-profile/">You are logined.</a></li>
+          </div>
+       {% else %}
+          <div class="d-md-none">
+            <li class="nav-item"><a class="nav-link whi" href="https://toolsharing.jp/login/">Login</a></li>
+          </div>
+          <div class="d-md-none">
+            <li class="nav-item"><a class="nav-link whi" href="https://toolsharing.jp/registration-2/">Sign up</a></li>
+          </div>
+        {% endif %}
+          <li class="nav-item"><a class="nav-link whi" href="https://toolsharing.jp/forcoders/">Top</a></li>
+          <li class="nav-item"><a class="nav-link whi" href="https://toolsharing.jp/my-profile/">My Profile</a></li>
+          <li class="nav-item"><a class="nav-link whi"  href="https://toolsharing.jp/search-users/">Search Users</a></li>
+          <li class="nav-item"><a class="nav-link whi"  href="{{ url_for('entry.new_entry') }}">Make Project</a></li><li class="nav-item"><a class="nav-link whi"  href="https://support.toolsharing.jp/">How to Make Project</a></li>
+        </div>
+      </ul>
+    </div>
+    </div>
+  </nav>
+  </div>
 
 
 <div class="container">
@@ -46,3 +137,31 @@
     </div>
 
 </div>
+
+ <script type="text/jsx">
+
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: 200,
+    },
+  },
+}));
+
+export default function searches-top() {
+  const classes = useStyles();
+
+  return (
+    <form className={classes.root} noValidate autoComplete="off">
+      <TextField id="standard-basic" label="Standard" />
+      <TextField id="filled-basic" label="Filled" variant="filled" />
+      <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+    </form>
+  );
+}
+</script>

@@ -38,3 +38,8 @@ def logout():
 @view.app_errorhandler(404)
 def non_existant_route(error):
     return redirect(url_for('view.login'))
+
+
+#@view.route('/create_user',methods=('GET','POST'))
+#def create_user():
+   # if request.method == 'GET':
