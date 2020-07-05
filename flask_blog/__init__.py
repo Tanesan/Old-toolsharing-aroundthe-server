@@ -2,7 +2,7 @@ from flask import Flask
 #from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="/templates/toolshare")
 #CORS(app)
 app.config.from_object('flask_blog.config')
 

@@ -12,8 +12,7 @@
   <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 
 
-
-<link rel=stylesheet href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <script src="{{ url_for('static', filename='current.js') }}"></script>
 
   <nav id="headeramine" class="navbar navbar-expand-md navbar-dark menucolor fixed-left">
@@ -29,7 +28,6 @@
   <path fill-rule="evenodd" d="M10 8a.5.5 0 0 0-.5-.5H3a.5.5 0 0 0 0 1h6.5A.5.5 0 0 0 10 8zm2.5 6a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 1 0v11a.5.5 0 0 1-.5.5z"/>
 </svg>
 </button>
- 
  {% if session.logged_in %}
 
     <div class="row mb-2 rows hidxs">
@@ -92,12 +90,10 @@
           <li class="nav-item"><a class="nav-link whi" href="https://toolsharing.jp/my-profile/">My Profile</a></li>
           <li class="nav-item"><a class="nav-link whi"  href="https://toolsharing.jp/search-users/">Search Users</a></li>
           <li class="nav-item"><a class="nav-link whi"  href="{{ url_for('entry.new_entry') }}">Make Project</a></li><li class="nav-item"><a class="nav-link whi"  href="https://support.toolsharing.jp/">How to Make Project</a></li>
-        </div>
       </ul>
-    </div>
-    </div>
+      </div>
   </nav>
-  </div>
+  
 
 
 <div class="container">
