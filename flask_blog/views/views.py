@@ -1,9 +1,16 @@
 from flask import request, redirect, url_for, render_template, flash, session
 from flask_blog import app
 from functools import wraps
-from flask import Blueprint
+from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask_blog import db
+from flask_blog.models.entries import User
+from flask_blog.views import auth_service
+import datetime
 
 view = Blueprint('view', __name__)
+
+auth = Blueprint('auth', __name__)
+
 
 def login_required(view):
     @wraps(view)
@@ -14,20 +21,18 @@ def login_required(view):
     return inner
 
 
-@view.route('/login', methods=['GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
-            flash('ユーザ名が異なります')
-        elif request.form['password'] != app.config['PASSWORD']:
-            flash('パスワードが異なります')
-        else:
-            session['logged_in'] = True
-            flash('ログインしました')
-            return redirect(url_for('entry.show_entries'))
-    return render_template('login.html')
-
+    if request.method == 'GET':
+        return render_template('login.html')
+    else:
+        user = auth_service.login(request.form)
+        if not user:
+            flash('メールアドレスもしくはパスワードに誤りがあります。')
+            return render_template('login.html')
+        flash('ログインしました。')
+        return redirect(url_for('entry.show_entries'))
+  
 
 @view.route('/logout')
 def logout():
@@ -40,6 +45,15 @@ def non_existant_route(error):
     return redirect(url_for('view.login'))
 
 
-#@view.route('/create_user',methods=('GET','POST'))
-#def create_user():
-   # if request.method == 'GET':
+
+@auth.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'GET':
+        return render_template('signup.html')
+    else:
+        user = auth_service.signup(request.form)
+        if user:
+            flash('メールアドレスは既に登録されています。')
+            return render_template('signup.html')
+        flash('新規登録に成功しました。')
+        return redirect(url_for('index'))

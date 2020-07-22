@@ -11,10 +11,10 @@ entry = Blueprint('entry', __name__)
 @login_required
 def show_entries():
     entries = Entry.query.order_by(Entry.id.desc()).all()
-    return render_template('toolshare/public/index.html', entries=entries)
+    return render_template('public/index.html', entries=entries)
 
 
-@entry.route('/toolshare/public', methods=['POST'])
+@entry.route('public', methods=['POST'])
 @login_required
 def add_entry():
     entry = Entry(
@@ -27,27 +27,27 @@ def add_entry():
     return redirect(url_for('entry.show_entries'))
 
 
-@entry.route('/toolshare/public/new', methods=['GET'])
+@entry.route('public/new', methods=['GET'])
 @login_required
 def new_entry():
-    return render_template('/toolshare/public/new.html')
+    return render_template('public/new.html')
 
 
-@entry.route('/toolshare/public/<int:id>', methods=['GET'])
+@entry.route('public/<int:id>', methods=['GET'])
 @login_required
 def show_entry(id):
     entry = Entry.query.get(id)
-    return render_template('/toolshare/public/show.html', entry=entry)
+    return render_template('public/show.html', entry=entry)
 
 
-@entry.route('/toolshare/public/<int:id>/edit', methods=['GET'])
+@entry.route('/public/<int:id>/edit', methods=['GET'])
 @login_required
 def edit_entry(id):
     entry = Entry.query.get(id)
-    return render_template('/toolshare/public/edit.html', entry=entry)
+    return render_template('/public/edit.html', entry=entry)
 
 
-@entry.route('/toolshare/public/<int:id>/update', methods=['POST'])
+@entry.route('/public/<int:id>/update', methods=['POST'])
 @login_required
 def update_entry(id):
     entry = Entry.query.get(id)
@@ -59,7 +59,7 @@ def update_entry(id):
     return redirect(url_for('entry.show_entries'))
 
 
-@entry.route('/toolshare/public/<int:id>/delete', methods=['POST'])
+@entry.route('/public/<int:id>/delete', methods=['POST'])
 @login_required
 def delete_entry(id):
     entry = Entry.query.get(id)
