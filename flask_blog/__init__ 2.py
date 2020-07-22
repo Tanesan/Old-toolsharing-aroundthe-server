@@ -5,8 +5,12 @@ from flask_login import LoginManager
 
 app = Flask(__name__)
 #CORS(app)
-app.config.from_object('flask_blog.config')
+#app.config.from_object('flask_blog.config')
 
+app.secret_key = "super secret key"
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///qa-site.sqlite3'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['DEBUG'] = True
 db = SQLAlchemy(app)
 
 from flask_blog.views.views import view

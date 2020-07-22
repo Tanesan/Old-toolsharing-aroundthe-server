@@ -3,13 +3,16 @@ from flask_blog import app
 from functools import wraps
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_blog import db
+import time
 from flask_blog.models.entries import User
 from flask_blog.views import auth_service
 import datetime
 
 view = Blueprint('view', __name__)
 
-auth = Blueprint('auth', __name__)
+@app.route('/time')
+def get_current_time():
+    return {'time': time.time()}
 
 
 def login_required(view):
@@ -21,7 +24,7 @@ def login_required(view):
     return inner
 
 
-@auth.route('/login', methods=['GET', 'POST'])
+@view.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
         return render_template('login.html')
@@ -46,7 +49,7 @@ def non_existant_route(error):
 
 
 
-@auth.route('/signup', methods=['GET', 'POST'])
+@view.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'GET':
         return render_template('signup.html')
@@ -56,4 +59,4 @@ def signup():
             flash('メールアドレスは既に登録されています。')
             return render_template('signup.html')
         flash('新規登録に成功しました。')
-        return redirect(url_for('index'))
+        return render_template('login.html')
