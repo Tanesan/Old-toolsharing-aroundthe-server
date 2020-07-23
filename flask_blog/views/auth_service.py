@@ -3,10 +3,14 @@ from sqlalchemy.exc import SQLAlchemyError
 from flask_blog import db
 from flask_blog.models.entries import User
 #login_user(user, remember=remember)
+
 def login(data: {}) -> User:
-    email = data.get('email')
-    password = data.get('password')
-    remember = True if data.get('remember') else False
+  #  email = data.get('email')
+    email = data['email']
+  #  password = data.get('password')
+    password = data['password']
+ #   remember = True if data.get('remenber')=="remenber" else False
+    remember = True if data['remenber']=="remenber" else False
     user = User.query.filter_by(email=email).first()
     return user
 

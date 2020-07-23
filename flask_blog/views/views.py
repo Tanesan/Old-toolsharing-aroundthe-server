@@ -7,13 +7,14 @@ import time
 from flask_blog.models.entries import User
 from flask_blog.views import auth_service
 import datetime
+from flask import jsonify
+from flask import json
 
 view = Blueprint('view', __name__)
-
+res = {}
 @app.route('/time')
 def get_current_time():
     return {'time': time.time()}
-
 
 def login_required(view):
     @wraps(view)
@@ -23,19 +24,21 @@ def login_required(view):
         return view(*args, **kwargs)
     return inner
 
-
-@view.route('/login', methods=['GET', 'POST'])
+@app.route('/auth/api', methods=['POST'])
 def login():
-    if request.method == 'GET':
-        return render_template('login.html')
-    else:
-        user = auth_service.login(request.form)
-        if not user:
-            flash('メールアドレスもしくはパスワードに誤りがあります。')
-            return render_template('login.html')
-        flash('ログインしました。')
-        return redirect(url_for('entry.show_entries'))
-  
+    # if request.method == 'POST':
+     #  return redirect('http://localhost:3000/')
+   #  else:
+   # text = request.get_data
+    
+    user = auth_service.login(request.json)
+    if not user:
+        flash('メールアドレスもしくはパスワードに誤りがあります。')
+        res['auth'] = False;
+        return jsonify(res)
+    res['auth'] = True;
+    return jsonify(res)
+
 
 @view.route('/logout')
 def logout():
