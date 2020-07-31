@@ -19,7 +19,8 @@ def after_request(response):
 @auth.route('/auth/api', methods=['GET', 'POST'])
 def login():
     user = auth_service.login(request.json)
-    if not user:
+    print(user)
+    if not user or user == False:
       res['auth'] = False;
       return jsonify(res)
     res['auth'] = True;

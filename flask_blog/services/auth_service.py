@@ -32,11 +32,14 @@ def login(data) -> User:
         password = data['password']
         remember = True if data['remenber']=="remenber" else False
         user = User.query.filter_by(email=email).first()
-        if not user and not user.check_password(user.password, password):
-            raise SQLAlchemyError
-
+        if user is None:
+            user = False
+        else:
+            if not user.check_password(password):
+                user = False
+                
         # ログイン。rememberにチェックを入れていればログインが維持される
-        login_user(user, remember=remember)
+       # login_user(user, remember=remember)
         return user
     except SQLAlchemyError:
         raise SQLAlchemyError
